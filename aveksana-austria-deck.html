@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Aveksana — One Platform, Two Modules · Austria Edition</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06121f;
+    --bg-2: #0a1a2e;
+    --ink: #e6f1f7;
+    --muted: #8aa6b8;
+    --line: rgba(138, 166, 184, 0.18);
+    --teal: #4dd9c4;
+    --teal-2: #2db8a3;
+    --cyan: #6ee0ff;
+    --warn: #ffb86b;
+    --serif: 'Fraunces', 'Times New Roman', serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #03080f;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    padding: 40px 20px;
+  }
+  .deck {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .slide {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    padding: 56px 64px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.6);
+  }
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 85% 15%, rgba(77, 217, 196, 0.08), transparent 60%),
+      radial-gradient(ellipse 500px 300px at 10% 90%, rgba(110, 224, 255, 0.05), transparent 60%);
+    pointer-events: none;
+  }
+  .slide > * { position: relative; z-index: 1; }
+
+  .slide-num {
+    position: absolute;
+    top: 28px; right: 32px;
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    z-index: 2;
+  }
+  .slide-num span { color: var(--teal); }
+
+  .eyebrow {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 18px;
+  }
+  h1, h2, h3 { margin: 0; font-family: var(--serif); font-weight: 500; letter-spacing: -0.01em; }
+  h1 { font-size: 56px; line-height: 1.05; }
+  h2 { font-size: 40px; line-height: 1.1; margin-bottom: 22px; }
+  h3 { font-size: 22px; line-height: 1.25; font-weight: 600; }
+  p { font-size: 16px; color: #cfdce5; margin: 0 0 12px; }
+  .lead { font-size: 19px; color: #d6e3eb; line-height: 1.55; max-width: 64ch; }
+
+  /* ============ SLIDE 1: COVER ============ */
+  .cover {
+    justify-content: space-between;
+  }
+  .cover .top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .cover .logo {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--teal);
+  }
+  .cover .meta {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-align: right;
+  }
+  .cover h1 {
+    font-size: 76px;
+    line-height: 1;
+    max-width: 16ch;
+  }
+  .cover h1 em {
+    font-style: italic;
+    color: var(--teal);
+    font-weight: 400;
+  }
+  .cover .sub {
+    font-size: 22px;
+    color: #b9cdd8;
+    max-width: 48ch;
+    margin-top: 24px;
+    font-weight: 300;
+  }
+  .cover .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+  .cover .bottom .name {
+    font-family: var(--serif);
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .cover .bottom .name span { color: var(--muted); display: block; font-size: 12px; font-family: var(--sans); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px;}
+  .cover .bottom .edition {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--teal);
+  }
+
+  /* ============ TWO-COLUMN SLIDE ============ */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 56px;
+    flex: 1;
+    align-items: start;
+  }
+  .two-col-tight {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    flex: 1;
+  }
+
+  /* ============ STAT TILES ============ */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .stat {
+    background: rgba(77, 217, 196, 0.04);
+    border: 1px solid rgba(77, 217, 196, 0.18);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .stat .num {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 500;
+    color: var(--teal);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat .label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .stat .desc {
+    font-size: 13px;
+    color: #cfdce5;
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+
+  /* ============ MODULE CARDS ============ */
+  .modules {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    flex: 1;
+  }
+  .module {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px 30px;
+    background: rgba(255,255,255,0.015);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .module.thesis { border-top: 3px solid var(--cyan); }
+  .module.artha { border-top: 3px solid var(--teal); }
+  .module .tag {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .module h3 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 600;
+    margin: 4px 0 8px;
+    color: var(--ink);
+  }
+  .module .for {
+    font-size: 13px;
+    color: var(--teal);
+    font-style: italic;
+    font-family: var(--serif);
+    margin-bottom: 14px;
+  }
+  .module ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .module li {
+    font-size: 14px;
+    color: #cfdce5;
+    padding: 6px 0 6px 18px;
+    position: relative;
+    line-height: 1.45;
+  }
+  .module li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  /* ============ PILLAR LIST ============ */
+  .pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 8px;
+  }
+  .pillar {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 20px;
+    align-items: start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .pillar:last-child { border-bottom: none; }
+  .pillar .pn {
+    font-family: var(--serif);
+    font-size: 36px;
+    color: var(--teal);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1;
+  }
+  .pillar h4 {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: var(--ink);
+  }
+  .pillar p {
+    font-size: 14px;
+    color: #b9cdd8;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ============ QUOTE ============ */
+  .quote {
+    border-left: 2px solid var(--teal);
+    padding: 8px 0 8px 22px;
+    margin-top: auto;
+    font-family: var(--serif);
+    font-size: 17px;
+    font-style: italic;
+    color: #d6e3eb;
+    line-height: 1.5;
+  }
+  .quote .attr {
+    display: block;
+    font-style: normal;
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+
+  /* ============ TABLE ============ */
+  .austria-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  .austria-table th, .austria-table td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .austria-table th {
+    color: var(--teal);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .austria-table td.kpi { color: var(--ink); font-weight: 500; }
+  .austria-table td.solve { color: #b9cdd8; }
+  .austria-table .check { color: var(--teal); font-weight: 600; }
+
+  /* ============ TRACTION ============ */
+  .traction-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    flex: 1;
+    margin-top: 8px;
+  }
+  .traction-block {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px;
+    background: rgba(255,255,255,0.015);
+    display: flex;
+    flex-direction: column;
+  }
+  .traction-block .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .traction-block .head h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .traction-block .head .pill {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    background: rgba(77,217,196,0.1);
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-weight: 600;
+  }
+  .traction-block .row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  .traction-block .row .k {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+  .traction-block .row .v {
+    color: #d6e3eb;
+    line-height: 1.45;
+  }
+  .traction-block .row .v strong { color: var(--teal); font-weight: 600; }
+
+  /* ============ OUTCOMES ============ */
+  .outcome-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .outcome {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 16px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: rgba(77, 217, 196, 0.04);
+    border: 1px solid rgba(77, 217, 196, 0.12);
+  }
+  .outcome .arrow {
+    color: var(--teal);
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  .outcome .ot { font-weight: 600; color: var(--ink); font-size: 15px; margin-bottom: 4px;}
+  .outcome .od { font-size: 13px; color: #b9cdd8; line-height: 1.5; }
+
+  /* ============ CTA ============ */
+  .cta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 36px;
+  }
+  .cta-card {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 30px 32px;
+    background: rgba(255,255,255,0.015);
+  }
+  .cta-card.primary {
+    background: linear-gradient(135deg, rgba(77,217,196,0.12), rgba(77,217,196,0.04));
+    border-color: rgba(77,217,196,0.4);
+  }
+  .cta-card .ct { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); font-weight: 600; }
+  .cta-card h3 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 600;
+    margin: 8px 0 10px;
+  }
+  .cta-card p { font-size: 14px; color: #b9cdd8; }
+
+  /* ============ DIAGRAM (slide 4) ============ */
+  .platform-diagram {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 12px;
+  }
+  .platform-core {
+    background: linear-gradient(135deg, rgba(77,217,196,0.18), rgba(110,224,255,0.08));
+    border: 1px solid rgba(77,217,196,0.4);
+    padding: 18px 34px;
+    border-radius: 100px;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .platform-core span { color: var(--teal); font-style: italic; }
+  .module-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    width: 100%;
+  }
+
+  /* ============ LIST WITH BIG NUMBERS ============ */
+  .num-list {
+    counter-reset: nl;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .num-list li {
+    counter-increment: nl;
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+  .num-list li::before {
+    content: counter(nl, decimal-leading-zero);
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--teal);
+    font-weight: 400;
+    font-style: italic;
+  }
+  .num-list h4 { font-size: 16px; margin: 0 0 4px; color: var(--ink); font-family: var(--sans); font-weight: 600; }
+  .num-list p { font-size: 14px; color: #b9cdd8; margin: 0; line-height: 1.5; }
+  .num-list.compact li { padding: 9px 0; }
+  .num-list.compact h4 { font-size: 15px; }
+  .num-list.compact p { font-size: 13px; line-height: 1.4; }
+  .num-list.compact li::before { font-size: 19px; }
+
+  /* footer brand */
+  .footer-brand {
+    position: absolute;
+    bottom: 22px; left: 64px;
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--muted);
+    z-index: 2;
+  }
+  .footer-brand span { color: var(--teal); }
+
+  /* utility */
+  .accent { color: var(--teal); }
+  .strike { text-decoration: line-through; color: var(--muted); }
+
+  /* print */
+  @media print {
+    body { background: white; padding: 0; }
+    .deck { gap: 0; max-width: none; }
+    .slide {
+      page-break-after: always;
+      border-radius: 0;
+      border: none;
+      width: 100vw;
+      height: 100vh;
+      aspect-ratio: auto;
+      box-shadow: none;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ============================================================
+     SLIDE 1 — COVER
+     ============================================================ -->
+<section class="slide cover">
+  <div class="top">
+    <div class="logo">Aveksana</div>
+    <div class="meta">AUSTRIA EDITION · 2026</div>
+  </div>
+  <div>
+    <div class="eyebrow">One platform · Two modules</div>
+    <h1>Research that <em>completes.</em><br>Funding that <em>arrives.</em></h1>
+    <p class="sub">An AI platform built for the two moments where research breaks down — when students can't finish, and when researchers can't get funded.</p>
+  </div>
+  <div class="bottom">
+    <div class="name">Surya Yadav<span>Founder · Aveksana Oy</span></div>
+    <div class="edition">For Austrian universities &amp; the research-funding ecosystem</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 2 — THE BOTTLENECK
+     ============================================================ -->
+<section class="slide">
+  <div class="slide-num"><span>02</span> / 12</div>
+  <div class="eyebrow">The problem</div>
+  <h2>Two failure points throttle every research institution.</h2>
+  <p class="lead">Universities and funding ecosystems share the same hidden bottleneck: research output is gated not by ideas, but by two structural friction points — and both compound silently across every cohort, every funding round.</p>
+
+  <div class="stats" style="grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 32px;">
+    <div class="stat" style="padding: 28px;">
+      <div class="num">01</div>
+      <div class="label" style="margin-top: 14px;">The completion gap</div>
+      <div class="desc" style="margin-top: 12px; font-size: 15px;">Students delay or abandon theses. Supervisors are overloaded. Doctoral pipelines stall. Every cohort that finishes late drags the next one with it.</div>
+    </div>
+    <div class="stat" style="padding: 28px;">
+      <div class="num">02</div>
+      <div class="label" style="margin-top: 14px;">The funding gap</div>
+      <div class="desc" style="margin-top: 12px; font-size: 15px;">Researchers and SMEs spend 100+ hours per proposal at 14–17% success rates. The slowest phase — absorbing rules, structuring the first draft — is where most projects quietly die.</div>
+    </div>
+  </div>
+
+  <p style="margin-top: 28px; font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--teal);">Aveksana is one platform built to remove both.</p>
+  <div class="footer-brand">Aveksana · <span>One platform, two modules</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 3 — WHY AUSTRIA
+     ============================================================ -->
+<section class="slide">
+  <div class="slide-num"><span>03</span> / 12</div>
+  <div class="eyebrow">Why this matters in Austria</div>
+  <h2>The Leistungsvereinbarung rewards exactly what Aveksana improves.</h2>
+  <p class="lead" style="max-width: 78ch;">Austrian public universities are steered through three-year performance agreements with the BMBWF. Within the three-pillar funding model, a defined set of competition indicators directly shapes each university's negotiating position for the next budget period.</p>
+
+  <table class="austria-table" style="margin-top: 24px;">
+    <thead>
+      <tr>
+        <th style="width: 42%;">Performance-agreement KPI</th>
+        <th style="width: 38%;">What moves it</th>
+        <th style="width: 20%;">Aveksana</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="kpi">On-time graduations</td>
+        <td class="solve">Thesis completion, supervision capacity, research-method readiness</td>
+        <td class="check">✓ Thesis module</td>
+      </tr>
+      <tr>
+        <td class="kpi">Students with 40+ ECTS / academic year</td>
+        <td class="solve">Reduced friction in research-heavy courses; better study throughput</td>
+        <td class="check">✓ Thesis module</td>
+      </tr>
+      <tr>
+        <td class="kpi">Doctoral programme throughput</td>
+        <td class="solve">PhD methods support; structured proposal &amp; thesis scaffolding</td>
+        <td class="check">✓ Both modules</td>
+      </tr>
+      <tr>
+        <td class="kpi">Third-party funding raised (Drittmittel)</td>
+        <td class="solve">More proposals submitted; higher quality per proposal</td>
+        <td class="check">✓ Artha module</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin-top: 22px; font-size: 14px; color: var(--muted); font-style: italic;">Same logic applies to Fachhochschulen (place allocation, accreditation throughput) and to FFG/COMET-funded research consortia (bid quality, win rate, doctoral participation).</p>
+  <div class="footer-brand">Aveksana · <span>Designed for performance-agreement systems</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 4 — ONE PLATFORM, TWO MODULES
+     ============================================================ -->
+<section class="slide">
+  <div class="slide-num"><span>04</span> / 12</div>
+  <div class="eyebrow">The platform</div>
+  <h2>One AI engine. Two distinct modules. Either, or both.</h2>
+
+  <div class="platform-diagram">
+    <div class="platform-core">Aveksana <span>· pedagogical + workflow AI core</span></div>
+    <div class="module-pair">
+      <div class="module thesis">
+        <div class="tag">Module 1</div>
+        <h3>Thesis Success</h3>
+        <div class="for">For students, supervisors, doctoral schools</div>
+        <ul>
+          <li>Research Learning Tool</li>
+          <li>Methods Course Assistant</li>
+          <li>AI-Powered Thesis Writing</li>
+        </ul>
+      </div>
+      <div class="module artha">
+        <div class="tag">Module 2 · Artha</div>
+        <h3>Funding Success</h3>
+        <div class="for">For researchers, SMEs, startups, research offices</div>
+        <ul>
+          <li>Idea Validator &amp; Gap Score</li>
+          <li>Proposal Builder</li>
+          <li>Reviewer Insights</li>
+          <li>Funding Match</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p style="text-align: center; margin-top: 28px; font-family: var(--serif); font-style: italic; color: #b9cdd8; font-size: 15px;">Adopt one module today. Add the second when ready. The shared engine means both improve together.</p>
+  <div class="footer-brand">Aveksana · <span>Single AI core, modular delivery</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 5 — THESIS MODULE
+     ============================================================ -->
+<section class="slide">
+  <div class="slide-num"><span>05</span> / 12</div>
+  <div class="eyebrow">Module 1 · Thesis Success</div>
+  <h2>From first research course to defended thesis.</h2>
+
+  <div class="two-col" style="margin-top: 12px;">
+    <div>
+      <p class="lead">Most "AI for students" tools optimize for writing speed. Aveksana optimizes for research <em>capability</em> — adapting to where each student is, scaffolding what they actually need, and giving supervisors back the time they lose to repetition.</p>
+
+      <ol class="num-list" style="margin-top: 18px;">
+        <li>
+          <div>
+            <h4>Research Learning Tool</h4>
+            <p>AI-guided research fundamentals. Hands-on exercises that prepare students <em>before</em> thesis writing — so the thesis isn't the first time they've done real research.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Methods Course Assistant</h4>
+            <p>For graduate programs and research-method courses. Practical application of methods through structured project workflows.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>AI-Powered Thesis Writing</h4>
+            <p>Topic selection, literature framing, structuring. Reduces supervisor workload — directly improves on-time completion.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 18px;">
+      <div style="border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; background: rgba(110,224,255,0.04);">
+        <div class="eyebrow" style="margin-bottom: 8px;">For supervisors</div>
+        <h3 style="font-size: 20px; margin-bottom: 8px;">Less repetition. More substance.</h3>
+        <p style="font-size: 14px; color: #b9cdd8; margin: 0;">Supervisors stop re-explaining structure, citation logic, and method choice. They engage with ideas, not formatting.</p>
+      </div>
+      <div style="border: 1px solid var(--line); border-radius: 14px; padding: 22px 24px; background: rgba(110,224,255,0.04);">
+        <div class="eyebrow" style="margin-bottom: 8px;">For doctoral schools</div>
+        <h3 style="font-size: 20px; margin-bottom: 8px;">Pipeline that doesn't stall.</h3>
+        <p style="font-size: 14px; color: #b9cdd8; margin: 0;">Methods scaffolding for PhD candidates aligns directly with GUEP 2025–2030 emphasis on doctoral training.</p>
+      </div>
+      <div class="quote" style="margin-top: 6px;">
+        "We're excited to see how Aveksana improves thesis efficiency and helps students graduate faster."
+        <span class="attr">Toni Pippola · TAMK</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-brand">Aveksana · <span>Thesis module</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 6 — ARTHA MODULE
+     ============================================================ -->
+<section class="slide">
+  <div class="slide-num"><span>06</span> / 12</div>
+  <div class="eyebrow">Module 2 · Artha</div>
+  <h2 style="font-size: 36px; margin-bottom: 14px;">Funding applications, accelerated — for researchers <em style="font-family:var(--serif);font-style:italic;color:var(--teal);">and</em> for SMEs.</h2>
+
+  <div class="two-col" style="margin-top: 4px; gap: 44px;">
+    <div>
+      <p style="font-size: 15px; color: #d6e3eb; line-height: 1.5; max-width: 58ch;">Artha is a horizontal funding-application platform. The same engine helps a Horizon Europe coordinator, an FWF principal investigator, and an FFG-applying SME — because the underlying problem is the same: 100+ hours absorbing rules and producing a structured first draft.</p>
+
+      <ol class="num-list compact" style="margin-top: 12px;">
+        <li>
+          <div>
+            <h4>Idea Validator</h4>
+            <p>Research Gap Score (0–100%) — instant feedback on novelty and fundability.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Proposal Builder</h4>
+            <p>Structured first draft in ~20 minutes, aligned with funder review criteria.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Reviewer Insights</h4>
+            <p>Optimize each proposal against the targeted agency's preferences and criteria.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h4>Funding Match</h4>
+            <p>Personalized grant recommendations matched to applicant and project (rolling out).</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div>
+      <h3 style="font-family: var(--serif); font-size: 20px; margin-bottom: 12px; color: var(--teal);">Two parallel use cases</h3>
+      <div style="border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; background: rgba(77,217,196,0.04);">
+        <div class="eyebrow" style="margin-bottom: 4px;">Academia</div>
+        <p style="font-size: 13px; color: #d6e3eb; margin: 0; line-height: 1.5;">PIs, postdocs, research offices applying for Horizon Europe, FWF, FFG academic calls, ERC, and bilateral funding.</p>
+      </div>
+      <div style="border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; background: rgba(77,217,196,0.04);">
+        <div class="eyebrow" style="margin-bottom: 4px;">SMEs · Startups · Public Sector</div>
+        <p style="font-size: 13px; color: #d6e3eb; margin: 0; line-height: 1.5;">Companies and innovation agencies applying for FFG, EIC, EAKR/ERDF, regional and structural funds. <strong style="color: var(--teal); font-weight: 600;">Pilot live with City of Vantaa &amp; Business Vantaa.</strong></p>
+      </div>
+
+      <div class="quote" style="margin-top: 16px; font-size: 14px; line-height: 1.45;">
+        "Artha lowered the blank-page threshold and produced a structured first version quickly."
+        <span class="attr">Reviewer 01 · Testbed Vantaa Pilot</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-brand">Aveksana · <span>Artha — funding module</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 7 — THE SHARED ENGINE (R&D depth)
+     ============================================================ -->
+<section class="slide">
+  <div class="slide-num"><span>07</span> / 12</div>
+  <div class="eyebrow">The shared engine · R&amp;D depth</div>
+  <h2>Why this isn't just another LLM wrapper.</h2>
+  <p class="lead" style="max-width: 80ch;">Most "AI for research" tools are general-purpose models with a research-themed prompt. Aveksana is built on two layers competitors don't have — and it's this combination that makes the platform applied research, not a SaaS feature.</p>
+
+  <div class="two-col-tight" style="margin-top: 22px;">
+    <div style="border: 1px solid rgba(77,217,196,0.3); border-radius: 14px; padding: 26px 28px; background: linear-gradient(160deg, rgba(77,217,196,0.06), transparent);">
+      <div class="eyebrow" style="color: var(--cyan);">Layer 01</div>
+      <h3 style="font-family: var(--serif); font-size: 24px; margin: 6px 0 12px;">Multi-theoretical pedagogical engine</h3>
+      <p style="font-size: 14px; line-height: 1.55;">A synthesis of five learning theories — <strong style="color:var(--ink)">learner autonomy, inquiry-based learning, scaffolded support, metacognitive development, constructivist foundations</strong> — operationalized as adaptive scaffolding that responds to where each user is in their research development.</p>
+      <p style="font-size: 13px; color: var(--muted); font-style: italic; margin-top: 10px; font-family: var(--serif);">The pedagogy makes it a teacher, not a tool.</p>
+    </div>
+    <div style="border: 1px solid rgba(77,217,196,0.3); border-radius: 14px; padding: 26px 28px; background: linear-gradient(160deg, rgba(77,217,196,0.06), transparent);">
+      <div class="eyebrow" style="color: var(--cyan);">Layer 02</div>
+      <h3 style="font-family: var(--serif); font-size: 24px; margin: 6px 0 12px;">Workflow-specific AI for research production</h3>
+      <p style="font-size: 14px; line-height: 1.55;">Tuned to the actual stages of research output — <strong style="color:var(--ink)">idea validation → literature grounding → proposal architecture → thesis structuring → reviewer alignment</strong> — rather than treating every task as generic text generation.</p>
+      <p style="font-size: 13px; color: var(--muted); font-style: italic; margin-top: 10px; font-family: var(--serif);">The workflow specificity is where general AI hallucinates and we don't.</p>
+    </div>
+  </div>
+
+  <p style="margin-top: 22px; font-size: 15px; color: #cfdce5; max-width: 80ch;">This combined moat — pedagogy <em>and</em> workflow — is what makes Aveksana relevant to applied-research funders (FFG, CDG, COMET) as a research-grade innovation, not just a commercial product.</p>
+  <div class="footer-brand">Aveksana · <span>Pedagogical AI · Workflow AI</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 8 — OUTCOMES FOR UNIVERSITIES
+     ============================================================ -->
+<section class="slide">
+  <div class="slide-num"><span>08</span> / 12</div>
+  <div class="eyebrow">Outcomes · Universities</div>
+  <h2>What a Vice-Rector or Research Director gets.</h2>
+  <p class="lead">Three operational gains, all of which feed the next Leistungsvereinbarung.</p>
+
+  <div class="outcome-list" style="margin-top: 24px;">
+    <div class="outcome">
+      <div class="arrow">→</div>
+      <div>
+        <div class="ot">Higher on-time graduation rates and ECTS throughput</div>
+        <div class="od">Students arrive at the thesis with research capability already developed. Methods-course friction drops. Thesis-stage delays compress. Improvements move two competition indicators at once.</div>
+      </div>
+    </div>
+    <div class="outcome">
+      <div class="arrow">→</div>
+      <div>
+        <div class="ot">Reduced supervisor load — without reducing supervisor presence</div>
+        <div class="od">Supervisors stop re-explaining the same structural and methodological points across cohorts. Time recovered goes back into substantive feedback and research output.</div>
+      </div>
+    </div>
+    <div class="outcome">
+      <div class="arrow">→</div>
+      <div>
+        <div class="ot">More third-party funding raised (Drittmittel) — via Artha</div>
+        <div class="od">Faster, higher-quality proposals from PIs, postdocs, and doctoral candidates. Direct contribution to the third-party-funding indicator that weighs heavily in performance-agreement negotiations.</div>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin-top: 22px; font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--teal); max-width: 70ch;">The same platform improves three of the most-watched competition indicators in the Austrian funding model.</p>
+  <div class="footer-brand">Aveksana · <span>For universities</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 9 — OUTCOMES FOR THE ECOSYSTEM
+     ============================================================ -->
+<section class="slide">
+  <div class="slide-num"><span>09</span> / 12</div>
+  <div class="eyebrow">Outcomes · Funding &amp; innovation ecosystem</div>
+  <h2>What FFG, CDG, COMET, and INiTS get.</h2>
+  <p class="lead">A platform that strengthens the entire Austrian research-and-innovation pipeline — from doctoral candidate to FFG-applying SME — with measurable downstream effects on win rates and bid quality.</p>
+
+  <div class="pillars" style="margin-top: 18px;">
+    <div class="pillar">
+      <div class="pn">i.</div>
+      <div>
+        <h4>More fundable proposals reach the table</h4>
+        <p>Artha removes the bottleneck of the first 100 hours. More applicants — especially first-time and underrepresented ones — make it from idea to submission. Validated in public-sector pilot: 100h baseline → ~20min structured first draft → ~10h to submission.</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pn">ii.</div>
+      <div>
+        <h4>Better-prepared early-career researchers</h4>
+        <p>The Thesis module produces graduates and PhDs who have done structured research — not just written papers. The downstream effect: stronger applicants for FFG bridge programs, FWF doctoral funding, and COMET centre roles.</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pn">iii.</div>
+      <div>
+        <h4>Cross-sector applicability — academia <em>and</em> SMEs</h4>
+        <p>Artha is already used by both academic researchers and a public-sector innovation agency. Same platform serves an FFG company applicant, a COMET industrial partner, an INiTS-incubated startup, and a university PI.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-brand">Aveksana · <span>For the research-and-innovation ecosystem</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 10 — TRACTION
+     ============================================================ -->
+<section class="slide">
+  <div class="slide-num"><span>10</span> / 12</div>
+  <div class="eyebrow">Traction · April 2026</div>
+  <h2>Two modules, two distinct buyer types, real pilots in flight.</h2>
+
+  <div class="traction-grid">
+
+    <div class="traction-block">
+      <div class="head">
+        <h3>Artha · Funding module</h3>
+        <div class="pill">Live · expanding</div>
+      </div>
+      <div class="row"><div class="k">Flagship pilot</div><div class="v"><strong>City of Vantaa</strong> · Testbed Vantaa programme · 90 days · 4 public-sector reviewers</div></div>
+      <div class="row"><div class="k">Output</div><div class="v">2–3 real funding proposals submitted — including a HEVI/ERDF (EAKR) application</div></div>
+      <div class="row"><div class="k">Time impact</div><div class="v">100h baseline → <strong>~20 min</strong> to structured first draft → ~10h to submission</div></div>
+      <div class="row"><div class="k">Outcomes</div><div class="v">First confirmed funding award secured · further results pending</div></div>
+      <div class="row"><div class="k">Programs</div><div class="v">Sitra · EU Horizon · ERDF/EAKR · expanding</div></div>
+      <div class="row"><div class="k">Next</div><div class="v">Second Vantaa cohort underway · <strong>Business Tampere</strong> pilot starting</div></div>
+      <div class="quote" style="margin-top: 12px; font-size: 14px;">
+        "The time savings come primarily from better quality and focus — not from automatically producing the application."
+        <span class="attr">Reviewer 02 · Testbed Vantaa</span>
+      </div>
+    </div>
+
+    <div class="traction-block">
+      <div class="head">
+        <h3>Thesis Success · University module</h3>
+        <div class="pill">Pilot live</div>
+      </div>
+      <div class="row"><div class="k">New pilot</div><div class="v"><strong>University of Helsinki</strong> · launched this week · 2 supervisors · ~10–20 students</div></div>
+      <div class="row"><div class="k">First beta</div><div class="v"><strong>TAMK</strong> (Tampere UAS) · supported a small cohort drafting their thesis proposals · validated the core workflow</div></div>
+      <div class="row"><div class="k">Pipeline</div><div class="v">Active conversations with multiple universities and Universities of Applied Sciences</div></div>
+      <div class="row"><div class="k">Target metric</div><div class="v">25% improvement in on-time thesis completion · supervisor-hour reduction</div></div>
+      <div class="row"><div class="k">Validation</div><div class="v">Endorsed by Prof. Pekka Abrahamsson (Tampere), Pauli Kuosmanen (Tampere), Shekhar Satpute (Vaasa)</div></div>
+      <div class="quote" style="margin-top: auto; font-size: 14px;">
+        "If it improves success rates by even 20%, it will be a game-changer."
+        <span class="attr">Prof. Pekka Abrahamsson · Tampere University</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer-brand">Aveksana · <span>Real pilots, honest measurement</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 11 — WHAT WE'RE BUILDING IN AUSTRIA
+     ============================================================ -->
+<section class="slide">
+  <div class="slide-num"><span>11</span> / 12</div>
+  <div class="eyebrow">Austria · 2026</div>
+  <h2>What we're building here.</h2>
+  <p class="lead">Aveksana was born in the Finnish performance-funding system. Austria's Leistungsvereinbarung framework creates the same structural fit — and the Austrian innovation ecosystem (FFG, CDG, COMET, INiTS, EdTech Austria) offers the partners to scale it well.</p>
+
+  <div class="pillars" style="margin-top: 18px;">
+    <div class="pillar">
+      <div class="pn">→</div>
+      <div>
+        <h4>University &amp; Fachhochschule pilots</h4>
+        <p>Targeting 2–3 Austrian institutions for thesis-module pilots in 2026 — aligned with on-time graduation, ECTS throughput, and doctoral-school KPIs.</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pn">→</div>
+      <div>
+        <h4>Research-funding partnerships</h4>
+        <p>Exploring applied-research collaboration with FFG (industrial &amp; SME funding), CDG (laboratories), and COMET (competence centres). Artha module directly serves FFG/EIC applicants.</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pn">→</div>
+      <div>
+        <h4>Local presence &amp; ecosystem integration</h4>
+        <p>INiTS as a candidate landing pad in Vienna. Membership in EdTech Austria. Presence at the EdTech Austria Summit, Hallein, 7 October 2026.</p>
+      </div>
+    </div>
+    <div class="pillar">
+      <div class="pn">→</div>
+      <div>
+        <h4>Alignment with GUEP 2025–2030</h4>
+        <p>Doctoral-education emphasis, third-party-funding indicators, and digitalization priorities all map to Aveksana's two modules.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer-brand">Aveksana · <span>Austrian roadmap 2026</span></div>
+</section>
+
+<!-- ============================================================
+     SLIDE 12 — CTA
+     ============================================================ -->
+<section class="slide">
+  <div class="slide-num"><span>12</span> / 12</div>
+  <div class="eyebrow">Let's talk</div>
+  <h1 style="font-size: 56px; max-width: 18ch;">Two ways to start a conversation.</h1>
+  <p class="lead" style="margin-top: 18px;">Aveksana is ready to pilot in Austria — and ready to partner with the institutions that will shape the country's research and innovation pipeline for the next decade.</p>
+
+  <div class="cta-grid">
+    <div class="cta-card primary">
+      <div class="ct">Universities · Fachhochschulen · Doctoral schools</div>
+      <h3>Pilot with us</h3>
+      <p>Start with one module — Thesis Success or Artha — at department or faculty level. Structured 90-day pilots with measured outcomes against your performance-agreement KPIs.</p>
+    </div>
+    <div class="cta-card primary">
+      <div class="ct">FFG · CDG · COMET · INiTS · EdTech Austria</div>
+      <h3>Partner with us</h3>
+      <p>Applied-research collaboration, ecosystem integration, joint pilots with funded SMEs and incubated startups. Artha already serves the exact applicant profile your programmes support.</p>
+    </div>
+  </div>
+
+  <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: baseline;">
+    <div>
+      <div style="font-family: var(--serif); font-size: 18px; color: var(--ink);">Surya Yadav</div>
+      <div style="font-size: 13px; color: var(--muted); margin-top: 2px;">Founder · Aveksana Oy · FI Business ID 3375817-6</div>
+    </div>
+    <div style="font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--teal);">surya.yadav@aveksana.com</div>
+  </div>
+  <div class="footer-brand">Aveksana · <span>Austria Edition · 2026</span></div>
+</section>
+
+</div>
+</body>
+</html>
